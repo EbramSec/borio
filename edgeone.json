@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/listen/*",
-      "destination": "https://bramlove1234-public.hf.space/listen/:splat"
+      "source": "/listen/(.*)",
+      "destination": "https://bramlove1234-public.hf.space/listen/$1"
     }
   ]
 }
