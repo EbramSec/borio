@@ -2,7 +2,6 @@ const TARGET = "https://bramlove1234-public.hf.space";
 
 const VERIFY_PATH = "/.well-known/pki-validation/fileauth.txt";
 const VERIFY_CONTENT = "202606032227434hvok4tlggdrf5uyzd75lywzyza6cgpl2n8qy1tk06dwarmwg9";
-
 export default async function onRequest(context) {
   const req = context.request;
   const url = new URL(req.url);
