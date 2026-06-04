@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/*",
+      "destination": "https://bramlove1234-public.hf.space/:splat"
+    }
+  ]
+}
