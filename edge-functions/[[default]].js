@@ -1,12 +1,26 @@
 const TARGET = "https://bramlove1234-public.hf.space";
 
-export default async function onRequest(context) {
-  return proxyToHF(context);
-}
+const VERIFY_PATH = "/.well-known/pki-validation/fileauth.txt";
+const VERIFY_CONTENT = "202606032145570oa7i7hvrbgz4d18ue9bt6w34uam84ro1vjqjjvjuefj8civvj";
 
-async function proxyToHF(context) {
+export default async function onRequest(context) {
   const req = context.request;
   const url = new URL(req.url);
+
+  if (url.pathname === VERIFY_PATH) {
+    return new Response(VERIFY_CONTENT, {
+      status: 200,
+      headers: {
+        "content-type": "text/plain; charset=utf-8",
+        "cache-control": "no-store"
+      }
+    });
+  }
+
+  return proxyToHF(req, url);
+}
+
+async function proxyToHF(req, url) {
   const targetUrl = TARGET + url.pathname + url.search;
 
   const headers = new Headers(req.headers);
@@ -32,10 +46,7 @@ async function proxyToHF(context) {
 
   const location = outHeaders.get("location");
   if (location) {
-    outHeaders.set(
-      "location",
-      location.replace(TARGET, "")
-    );
+    outHeaders.set("location", location.replace(TARGET, ""));
   }
 
   return new Response(res.body, {
